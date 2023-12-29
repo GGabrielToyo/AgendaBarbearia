@@ -29,6 +29,8 @@ import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatInputModule } from '@angular/material/input';
 import { MatDialogModule } from '@angular/material/dialog';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
+import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
+import { AutenticacaoInterceptor } from './core/interceptors/autenticacao.interceptor';
 
 @NgModule({
   declarations: [
@@ -61,9 +63,14 @@ import { MatAutocompleteModule } from '@angular/material/autocomplete';
     MatInputModule,
     MatNativeDateModule,
     MatDialogModule,
-    MatAutocompleteModule
+    MatAutocompleteModule,
+    HttpClientModule
   ],
-  providers: [],
+  providers: [{
+    provide: HTTP_INTERCEPTORS,
+    useClass: AutenticacaoInterceptor,
+    multi: true
+  }],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
