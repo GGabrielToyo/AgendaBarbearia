@@ -16,12 +16,12 @@ export class CadastroService {
     return this.http.post<Usuario>(`${this.apiUrl}/usuario/cadastrar`, usuario);
   }
 
-  buscarUsuario(id: number):Observable<Usuario>{
-    return this.http.get<Usuario>(`${this.apiUrl}/usuario/${id}`);
+  buscarUsuario():Observable<Usuario>{
+    return this.http.get<Usuario>(`${this.apiUrl}/usuario/perfil`);
   }
 
   editarUsuario(usuario: Usuario): Observable<Usuario>{
     return this.http.put<Usuario>(`${this.apiUrl}/usuario`, usuario);
   }
-  
+
 }

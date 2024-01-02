@@ -31,6 +31,8 @@ import { MatDialogModule } from '@angular/material/dialog';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
 import { AutenticacaoInterceptor } from './core/interceptors/autenticacao.interceptor';
+import { LoginComponent } from './pages/login/login.component';
+import { PerfilComponent } from './pages/perfil/perfil.component';
 
 @NgModule({
   declarations: [
@@ -41,7 +43,9 @@ import { AutenticacaoInterceptor } from './core/interceptors/autenticacao.interc
     FooterComponent,
     CadastroComponent,
     FormBaseComponent,
-    CardComponent
+    CardComponent,
+    LoginComponent,
+    PerfilComponent
   ],
   imports: [
     BrowserModule,

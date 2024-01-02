@@ -15,25 +15,25 @@ export class CadastroComponent {
     private formularioService: FormularioService,
     private cadastroService: CadastroService,
     private router: Router
-  ){}
+  ) { }
 
-  cadastrar(){
+  cadastrar() {
     const formCadastro = this.formularioService.getCadastro();
 
-    if(formCadastro?.value) {
+    if (formCadastro?.value) {
       const novoUsuario: Usuario = formCadastro.getRawValue() as Usuario;
       console.log(novoUsuario);
-      
+
       //Formatar dados do usuario de acordo com dto de usuario no back-end
       //this.cadastroService.cadastrar(novoUsuario).subscribe({
       //  next: (resp) => {
-       //   console.log(resp);
+      //    console.log(resp);
       //    this.router.navigateByUrl('/');
       //  },
-       // error: (err) => {
-       //   console.log("Erro ao cadastrar usuário. ERRO -> ", err);
+      //  error: (err) => {
+      //    console.log("Erro ao cadastrar usuário. ERRO -> ", err);
       //  }
-      //}); 
+      //});
     }
   }
 
