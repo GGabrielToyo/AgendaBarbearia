@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { AutenticacaoService } from 'src/app/core/services/autenticacao.service';
+import { DadosAutenticacao } from 'src/app/core/types/type';
 
 @Component({
   selector: 'app-login',
@@ -11,6 +12,7 @@ import { AutenticacaoService } from 'src/app/core/services/autenticacao.service'
 export class LoginComponent implements OnInit {
 
   loginForm!: FormGroup
+  dadosAutenticacao!: DadosAutenticacao;
 
   constructor(
     private formBuilder: FormBuilder,
@@ -26,16 +28,18 @@ export class LoginComponent implements OnInit {
   }
 
   login(): void {
-    const email = this.loginForm.value.email;
-    const senha = this.loginForm.value.senha;
+    this.dadosAutenticacao = {
+      login: this.loginForm.value.email,
+      senha: this.loginForm.value.senha
+    }
 
-    this.loginService.autenticar(email, senha).subscribe({
-      next: (value) => {
+    this.loginService.autenticar(this.dadosAutenticacao).subscribe({
+      next: () => {
         this.router.navigateByUrl('/');
         this.loginForm.reset();
       },
       error: (err) => {
-        console.log("Erro no login: ", err);
+        console.log("Erro no login: ", err.error);
       }
     });
   }

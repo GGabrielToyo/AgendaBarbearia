@@ -1,0 +1,71 @@
+app-container {
+    width: 40%;
+    margin-bottom: 48px;
+    margin-top: 32px;
+
+    .grid-container {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        grid-gap: 16px;
+
+        .full-width {
+            grid-column: 1 / span 2;
+        }
+
+        .grid-item {
+            display: flex;
+            flex-direction: column;
+            grid-gap: 12px;
+        }
+    }
+
+    mat-card {
+        background-color: #000000c7;
+
+        .calendar-card{
+            width: 350px;
+        }
+    }
+
+    mat-card-title {
+        text-align: center;
+        font-size: 32px;
+        font-weight: 400;
+        margin-bottom: 32px;
+        margin-top: 40px;
+        color: #fff;
+    }
+
+    mat-card-actions {
+        display: flex;
+        justify-content: center;
+
+        button {
+            margin: 0 8px;
+            width: 100%;
+        }
+    }
+
+    h2 {
+        font-weight: 400;
+        font-size: 22px;
+        color: #1D1B20;
+        margin-left: 16px;
+    }
+
+    button {
+        img {
+            vertical-align: middle;
+        }
+    }
+
+    @media (max-width: 600px) {
+        .grid-container {
+            grid-template-columns: 1fr;
+        }
+
+        .full-width {
+            grid-column: 1;
+        }
+    }
+}

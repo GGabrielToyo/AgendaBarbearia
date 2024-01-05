@@ -1,0 +1,30 @@
+<app-container>
+    <mat-card>
+        <form>
+            <mat-card-title>
+                Agende seu horário
+            </mat-card-title>
+
+            <mat-card-content>
+                <div class="grid-container">
+                    <div class="grid-item">
+                        <mat-card class="calendar-card">
+                            <mat-calendar [(selected)]="dataSelecionada"></mat-calendar>
+                        </mat-card>
+                    </div>
+
+                    <div class="grid-item">
+                        <app-dropdown label="Barbeiro"></app-dropdown>
+                        <app-dropdown label="Horário"></app-dropdown>
+                        
+                        <mat-card-actions class="full-width">
+                            <button mat-flat-button [disabled]="false" color="primary">
+                                AGENDAR
+                            </button>
+                        </mat-card-actions>
+                    </div>
+                </div>
+            </mat-card-content>
+        </form>
+    </mat-card>
+</app-container>

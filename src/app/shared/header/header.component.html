@@ -3,10 +3,20 @@
         <img routerLink="/" src="" alt="Logo da aplicação Bravos">
         <span class="spacer"></span>
         <div class="links-toobar">
-            <button mat-button>Agendar horário</button>
+            <button routerLink="/agendar" mat-button>Agendar horário</button>
             <button mat-button>Sobre</button>
-            <button routerLink="/cadastro" mat-raised-button color="primary">CADASTRE-SE</button>
-            <button routerLink="/login" mat-stroked-button>LOGIN</button>
+
+            <ng-container *ngIf="user$ | async as pessoaUsuaria, else login">
+                <a routerLink="/perfil">
+                    <img src="../../../assets/icones/user.png" alt="Ícone de usuário">
+                </a>
+                <button mat-stroked-button (click)="logout()">SAIR</button>
+            </ng-container>
+
+            <ng-template #login>
+                <button routerLink="/cadastro" mat-raised-button color="primary">CADASTRE-SE</button>
+                <button routerLink="/login" mat-stroked-button>LOGIN</button>
+            </ng-template>
         </div>
     </mat-toolbar>
 </header>

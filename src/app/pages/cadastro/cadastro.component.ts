@@ -11,6 +11,8 @@ import { Usuario } from 'src/app/core/types/type';
 })
 export class CadastroComponent {
 
+  usuario!: Usuario | null;
+
   constructor(
     private formularioService: FormularioService,
     private cadastroService: CadastroService,
@@ -18,22 +20,37 @@ export class CadastroComponent {
   ) { }
 
   cadastrar() {
+    this.iniciaUsuario();
+
+    if (this.usuario) {
+      this.cadastroService.cadastrar(this.usuario).subscribe({
+        next: (resp) => {
+          console.log(resp);
+          this.router.navigateByUrl('/');
+        },
+        error: (err) => {
+          console.log("Erro ao cadastrar usuário. ERRO -> ", err);
+        }
+      });
+    } else {
+      console.log('ERRO -> Dados formulário inválidos.');
+    }
+  }
+
+  iniciaUsuario(): void {
     const formCadastro = this.formularioService.getCadastro();
 
     if (formCadastro?.value) {
-      const novoUsuario: Usuario = formCadastro.getRawValue() as Usuario;
-      console.log(novoUsuario);
-
-      //Formatar dados do usuario de acordo com dto de usuario no back-end
-      //this.cadastroService.cadastrar(novoUsuario).subscribe({
-      //  next: (resp) => {
-      //    console.log(resp);
-      //    this.router.navigateByUrl('/');
-      //  },
-      //  error: (err) => {
-      //    console.log("Erro ao cadastrar usuário. ERRO -> ", err);
-      //  }
-      //});
+      this.usuario = {
+        id: null,
+        nome: formCadastro?.value.nome,
+        nascimento: formCadastro?.value.nascimento,
+        telefone: formCadastro?.value.telefone,
+        login: formCadastro?.value.email,
+        senha: formCadastro?.value.senha,
+      }
+    } else {
+      this.usuario = null;
     }
   }
 

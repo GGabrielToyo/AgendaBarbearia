@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormGroup } from '@angular/forms';
+import { FormGroup, Validators } from '@angular/forms';
 import { TokenService } from 'src/app/core/services/token.service';
 import { Usuario } from 'src/app/core/types/type';
 import { CadastroService } from 'src/app/core/services/cadastro.service';
@@ -45,23 +45,29 @@ export class PerfilComponent implements OnInit{
       nome: this.usuario.nome,
       nascimento: this.usuario.nascimento,
       telefone: this.usuario.telefone,
-      email: this.usuario.email,
-      senha: this.usuario.senha,
+      email: this.usuario.login,
+      confirmarEmail: this.usuario.login,
+      senha: null,
+      confirmarSenha: null
     });
   }
 
   atualizar(): void {
-    const dadosAtualizados = {
+    const dadosAtualizados: Usuario = {
+      id: this.usuario.id,
       nome: this.form?.value.nome,
       nascimento: this.form?.value.nascimento,
       telefone: this.form?.value.telefone,
-      email: this.form?.value.email,
+      login: this.form?.value.email,
       senha: this.form?.value.senha,
     }
 
     this.cadastroService.editarUsuario(dadosAtualizados).subscribe({
-      next: () => {
+      next: (dadosAtualizados) => {
         alert("Cadastro atualizado com sucesso!");
+        this.usuario = dadosAtualizados;
+        this.nome = dadosAtualizados.nome;
+        this.carregarForm();
       },
       error: (err) => {
         console.log("Erro ao atualizar cadastro: ", err);

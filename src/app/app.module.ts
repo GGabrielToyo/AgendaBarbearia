@@ -33,6 +33,9 @@ import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
 import { AutenticacaoInterceptor } from './core/interceptors/autenticacao.interceptor';
 import { LoginComponent } from './pages/login/login.component';
 import { PerfilComponent } from './pages/perfil/perfil.component';
+import { AgendarComponent } from './pages/agendar/agendar.component';
+import { FormAgendarComponent } from './shared/form-agendar/form-agendar.component';
+import { DropdownComponent } from './shared/dropdown/dropdown.component';
 
 @NgModule({
   declarations: [
@@ -45,7 +48,10 @@ import { PerfilComponent } from './pages/perfil/perfil.component';
     FormBaseComponent,
     CardComponent,
     LoginComponent,
-    PerfilComponent
+    PerfilComponent,
+    AgendarComponent,
+    FormAgendarComponent,
+    DropdownComponent
   ],
   imports: [
     BrowserModule,

@@ -3,10 +3,8 @@ import { Injectable } from '@angular/core';
 import { Observable, tap } from 'rxjs';
 import { environment } from 'src/environments/environment.development';
 import { UserService } from './user.service';
+import { AuthResponse, DadosAutenticacao } from '../types/type';
 
-interface AuthResponse {
-  access_token: string;
-}
 
 @Injectable({
   providedIn: 'root'
@@ -19,11 +17,10 @@ export class AutenticacaoService {
     private userSerive: UserService
   ) { }
 
-  autenticar(email: string, senha: string): Observable<HttpResponse<AuthResponse>>{
-    return this.http.post<AuthResponse>(`${this.apiUrl}/auth/login`, 
-    {email, senha}, { observe: 'response'}).pipe(
+  autenticar(dadosAutenticacao: DadosAutenticacao): Observable<HttpResponse<AuthResponse>>{
+    return this.http.post<AuthResponse>(`${this.apiUrl}/login`, dadosAutenticacao, { observe: 'response'}).pipe(
       tap((response => {
-        const authToken = response.body?.access_token || '';
+        const authToken = response.body?.token || '';
         this.userSerive.salvarToken(authToken);
       }))
     );
