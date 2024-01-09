@@ -9,13 +9,16 @@
                 <div class="grid-container">
                     <div class="grid-item">
                         <mat-card class="calendar-card">
-                            <mat-calendar [(selected)]="dataSelecionada"></mat-calendar>
+                            <mat-calendar
+                             [(selected)]="dataSelecionada"
+                            (selectedChange)="buscarHorariosDisponiveisNaData()">
+                        </mat-calendar>
                         </mat-card>
                     </div>
 
                     <div class="grid-item">
                         <app-dropdown label="Barbeiro"></app-dropdown>
-                        <app-dropdown label="Horário"></app-dropdown>
+                        <app-dropdown-horario [horariosDisponiveis]="horarios" label="Horário"></app-dropdown-horario>
                         
                         <mat-card-actions class="full-width">
                             <button mat-flat-button [disabled]="false" color="primary">

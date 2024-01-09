@@ -28,7 +28,7 @@ const routes: Routes = [
   {
     path: 'agendar',
     component: AgendarComponent,
-    /*canActivate: [authGuard]*/
+    canActivate: [authGuard]
   }
 ];
 

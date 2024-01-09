@@ -36,6 +36,7 @@ import { PerfilComponent } from './pages/perfil/perfil.component';
 import { AgendarComponent } from './pages/agendar/agendar.component';
 import { FormAgendarComponent } from './shared/form-agendar/form-agendar.component';
 import { DropdownComponent } from './shared/dropdown/dropdown.component';
+import { DropdownHorarioComponent } from './shared/dropdown/dropdown-horario/dropdown-horario.component';
 
 @NgModule({
   declarations: [
@@ -51,7 +52,8 @@ import { DropdownComponent } from './shared/dropdown/dropdown.component';
     PerfilComponent,
     AgendarComponent,
     FormAgendarComponent,
-    DropdownComponent
+    DropdownComponent,
+    DropdownHorarioComponent
   ],
   imports: [
     BrowserModule,
