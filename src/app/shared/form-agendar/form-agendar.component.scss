@@ -1,5 +1,5 @@
 app-container {
-    width: 40%;
+    width: 50%;
     margin-bottom: 48px;
     margin-top: 32px;
 
@@ -59,9 +59,18 @@ app-container {
         }
     }
 
-    @media (max-width: 600px) {
+    @media (max-width: 1280px) {
         .grid-container {
             grid-template-columns: 1fr;
+
+            .grid-item {
+                align-items: center;
+
+                app-dropdown,
+                app-dropdown-horario {
+                    width: 100%;
+                }
+            }
         }
 
         .full-width {

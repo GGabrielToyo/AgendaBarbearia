@@ -1,4 +1,5 @@
 import { Component, Input } from '@angular/core';
+import { FormControl } from '@angular/forms';
 
 @Component({
   selector: 'app-dropdown-horario',
@@ -9,6 +10,7 @@ export class DropdownHorarioComponent{
   
   @Input() label: string = '';
   @Input() horariosDisponiveis: string[] = [];
+  @Input() control!: FormControl;
   
   filteredOptions$: string[] = this.horariosDisponiveis;
 

@@ -12,9 +12,10 @@ import { Barbeiro } from 'src/app/core/types/type';
 export class DropdownComponent implements OnInit {
 
   @Input() label: string = '';
-  control = new FormControl<Barbeiro | string>('');
+  //control = new FormControl<Barbeiro | string>('');
   barbeiros: Barbeiro[] = [];
   filteredOptions$?: Observable<Barbeiro[]>;
+  @Input() control!: FormControl;
 
   constructor(
     private barbeiroService: BarbeiroService

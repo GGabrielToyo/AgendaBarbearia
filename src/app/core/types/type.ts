@@ -34,5 +34,5 @@ export interface AuthResponse {
     id: number,
     idBarbeiro: number,
     idUsuario: number,
-    data: Date
+    data: string
   }

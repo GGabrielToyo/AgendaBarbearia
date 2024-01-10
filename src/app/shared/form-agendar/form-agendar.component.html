@@ -1,6 +1,6 @@
 <app-container>
     <mat-card>
-        <form>
+        <form [formGroup]="formAgendamento">
             <mat-card-title>
                 Agende seu horário
             </mat-card-title>
@@ -9,19 +9,29 @@
                 <div class="grid-container">
                     <div class="grid-item">
                         <mat-card class="calendar-card">
-                            <mat-calendar
-                             [(selected)]="dataSelecionada"
-                            (selectedChange)="buscarHorariosDisponiveisNaData()">
-                        </mat-calendar>
+                            <mat-calendar [(selected)]="dataSelecionada"
+                                (selectedChange)="buscarHorariosDisponiveisNaData()">
+                            </mat-calendar>
                         </mat-card>
+                        <mat-error
+                            *ngIf="formAgendamento.get('data')?.errors?.['required'] && formAgendamento.get('data')?.touched">
+                            Escolha uma data.
+                        </mat-error>
                     </div>
 
                     <div class="grid-item">
-                        <app-dropdown label="Barbeiro"></app-dropdown>
-                        <app-dropdown-horario [horariosDisponiveis]="horarios" label="Horário"></app-dropdown-horario>
-                        
+                        <app-dropdown label="Barbeiro" [control]="barbeiroControl"></app-dropdown>
+                        <mat-error *ngIf="barbeiroControl?.errors && barbeiroControl?.touched">
+                            Escolha um barbeiro para prosseguir.
+                        </mat-error>
+                        <app-dropdown-horario [horariosDisponiveis]="horarios" label="Horário"
+                            [control]="horarioControl"></app-dropdown-horario>
+                        <mat-error *ngIf="horarioControl?.errors && horarioControl?.touched">
+                            Escolha um horário.
+                        </mat-error>
+
                         <mat-card-actions class="full-width">
-                            <button mat-flat-button [disabled]="false" color="primary">
+                            <button mat-flat-button [disabled]="formAgendamento.invalid" color="primary">
                                 AGENDAR
                             </button>
                         </mat-card-actions>

@@ -2,7 +2,8 @@
     <mat-label>{{ label }}</mat-label>
     <input
      matInput 
-    [name]="label" 
+    [name]="label"
+    [formControl]="control"
     ngDefaultControl
     [matAutocomplete]="auto">
     <mat-icon matSuffix>search</mat-icon>
