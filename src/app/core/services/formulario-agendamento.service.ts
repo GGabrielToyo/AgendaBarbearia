@@ -10,11 +10,11 @@ export class FormularioAgendamentoService {
 
   constructor() { }
 
-  getCadastro():FormGroup | null {
+  getAgendamento():FormGroup | null {
     return this.formAgendamento;
   }
 
-  setCadastro(form: FormGroup){
+  setAgendamento(form: FormGroup){
     this.formAgendamento = form;
   }
 }

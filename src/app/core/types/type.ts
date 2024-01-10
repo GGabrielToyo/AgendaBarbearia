@@ -17,7 +17,7 @@ export interface AuthResponse {
   }
 
   export interface Barbeiro {
-    id: number | null,
+    id: number,
     nome: string,
     email: string
   }
@@ -31,8 +31,8 @@ export interface AuthResponse {
   }
 
   export interface Agendamento {
-    id: number,
+    id?: number,
     idBarbeiro: number,
-    idUsuario: number,
+    idUsuario: number | null,
     data: string
   }

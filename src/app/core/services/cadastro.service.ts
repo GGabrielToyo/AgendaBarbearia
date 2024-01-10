@@ -9,6 +9,7 @@ import { Observable } from 'rxjs';
 })
 export class CadastroService {
   private apiUrl = environment.apiUrl;
+  usuario!: Usuario;
 
   constructor(private http: HttpClient) { }
 

@@ -4,6 +4,7 @@ import { Observable } from 'rxjs';
 import { environment } from 'src/environments/environment.development';
 import { Agendamento } from '../types/type';
 import { Data } from '@angular/router';
+import { FormControl } from '@angular/forms';
 
 @Injectable({
   providedIn: 'root'
@@ -24,4 +25,9 @@ export class AgendaService {
     const dataFormatada = data.toISOString();
     return this.http.get<Agendamento[]>(`${this.apiUrl}/agendamentos/${dataFormatada}`);
   }
+
+  agendarHorario(agendamento: Agendamento): Observable<Agendamento> {
+    return this.http.post<Agendamento>(`${this.apiUrl}/agendamentos`, agendamento);
+  }
+
 }

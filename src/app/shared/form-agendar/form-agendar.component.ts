@@ -1,8 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { AgendaService } from 'src/app/core/services/agenda.service';
+import { CadastroService } from 'src/app/core/services/cadastro.service';
 import { FormularioAgendamentoService } from 'src/app/core/services/formulario-agendamento.service';
-import { Barbeiro } from 'src/app/core/types/type';
+import { UserService } from 'src/app/core/services/user.service';
+import { Agendamento, Barbeiro, Usuario } from 'src/app/core/types/type';
 
 @Component({
   selector: 'app-form-agendar',
@@ -18,10 +20,14 @@ export class FormAgendarComponent implements OnInit {
   horarios: string[] = [];
   horariosOcupadosNaData: string[] = [];
 
+  novoAgendamento: Agendamento | undefined = undefined;
+  usuario!: Usuario;
+
   constructor(
     private agendaService: AgendaService,
     private formAgendamentoService: FormularioAgendamentoService,
-    private formBuilder: FormBuilder
+    private formBuilder: FormBuilder,
+    private cadastroService: CadastroService
   ) { }
 
   ngOnInit(): void {
@@ -31,15 +37,17 @@ export class FormAgendarComponent implements OnInit {
       horario: this.horarioControl
     });
 
-    this.formAgendamentoService.setCadastro(this.formAgendamento);
+    this.formAgendamentoService.setAgendamento(this.formAgendamento);
 
+    this.cadastroService.buscarUsuario().subscribe(usuario => {
+      this.usuario = usuario;
+    });
   }
 
   buscarHorariosDisponiveisNaData() {
     this.preencherHorarios()
-    this.horariosOcupadosNaData = [];
-    console.log(this.dataSelecionada.toISOString());
     this.setValueForm();
+    this.horariosOcupadosNaData = [];
 
     this.agendaService.getHorariosNaData(this.dataSelecionada).subscribe(resp => {
       resp.forEach(agendamento => {
@@ -88,6 +96,27 @@ export class FormAgendarComponent implements OnInit {
 
   setValueForm(): void {
     this.formAgendamento.get('data')?.setValue(this.dataSelecionada);
+  }
+
+  formatarDataParaAgendamento(): string {
+    const data = this.dataSelecionada.toISOString().substring(0, 10);
+    const hora = this.formAgendamento.get('horario')?.value;
+    return `${data}T${hora}`;
+  }
+
+  agendar(): void {
+    const barbeiro = this.formAgendamento.get('barbeiro')?.value;
+
+    this.novoAgendamento = {
+      idBarbeiro: barbeiro.id,
+      idUsuario: this.usuario.id,
+      data: this.formatarDataParaAgendamento()
+    }
+
+    this.agendaService.agendarHorario(this.novoAgendamento).subscribe(resp => {
+      console.log(resp);
+    });
+    
   }
 
 }
