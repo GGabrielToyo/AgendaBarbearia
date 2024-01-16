@@ -18,7 +18,7 @@ export class AgendaService {
   ) { }
 
   getTodosAgendamentos(): Observable<Agendamento[]> {
-    return this.http.get<Agendamento[]>(`${this.apiUrl}/agendamentos/`);
+    return this.http.get<Agendamento[]>(`${this.apiUrl}/agendamentos`);
   }
 
   getHorariosNaData(data: Date): Observable<Agendamento[]> {

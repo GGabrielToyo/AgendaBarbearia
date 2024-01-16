@@ -18,7 +18,7 @@ export class FormAgendarComponent implements OnInit {
 
   dataSelecionada!: Date;
   horarios: string[] = [];
-  horariosOcupadosNaData: string[] = [];
+  horariosOcupadosNaData: Agendamento[] = [];
 
   novoAgendamento: Agendamento | undefined = undefined;
   usuario!: Usuario;
@@ -45,15 +45,11 @@ export class FormAgendarComponent implements OnInit {
   }
 
   buscarHorariosDisponiveisNaData() {
-    this.preencherHorarios()
-    this.setValueForm();
+    this.setValueDataForm();
     this.horariosOcupadosNaData = [];
 
     this.agendaService.getHorariosNaData(this.dataSelecionada).subscribe(resp => {
-      resp.forEach(agendamento => {
-        this.horariosOcupadosNaData.push(this.formatarData(agendamento.data));
-      });
-      this.atualizarHorariosDeAcordoComHorariosOcupados();
+      this.horariosOcupadosNaData = resp;
     });
   }
 
@@ -84,17 +80,23 @@ export class FormAgendarComponent implements OnInit {
     return numero < 10 ? `0${numero}` : `${numero}`;
   }
 
-  atualizarHorariosDeAcordoComHorariosOcupados(): void {
-    this.horariosOcupadosNaData.forEach(horarioOcupado => {
-      const index = this.horarios.indexOf(horarioOcupado);
+  atualizarHorariosDeAcordoComHorariosDisponiveisDoBarbeiroEscolhido(): void {
+    this.preencherHorarios();
+    var barbeiroEscolhido: Barbeiro = this.formAgendamento.get('barbeiro')?.value;
 
-      if (index !== -1) {
-        this.horarios.splice(index, 1);
-      }
-    });
+    if (!(this.horariosOcupadosNaData.length == 0) && barbeiroEscolhido) {
+      this.horariosOcupadosNaData.forEach(horarioOcupado => {
+        if (horarioOcupado.idBarbeiro == barbeiroEscolhido.id) {
+          var index = this.horarios.indexOf(this.formatarData(horarioOcupado.data));
+          if (index !== -1) {
+            this.horarios.splice(index, 1);
+          }
+        }
+      });
+    }
   }
 
-  setValueForm(): void {
+  setValueDataForm(): void {
     this.formAgendamento.get('data')?.setValue(this.dataSelecionada);
   }
 
@@ -106,17 +108,24 @@ export class FormAgendarComponent implements OnInit {
 
   agendar(): void {
     const barbeiro = this.formAgendamento.get('barbeiro')?.value;
-
     this.novoAgendamento = {
       idBarbeiro: barbeiro.id,
       idUsuario: this.usuario.id,
       data: this.formatarDataParaAgendamento()
     }
 
+
     this.agendaService.agendarHorario(this.novoAgendamento).subscribe(resp => {
+      this.buscarHorariosDisponiveisNaData();  
+    });
+
+    this.formAgendamento.reset();
+
+    this.agendaService.getTodosAgendamentos().subscribe(resp => {
       console.log(resp);
     });
-    
+
+
   }
 
 }

@@ -6,13 +6,13 @@ import { FormControl } from '@angular/forms';
   templateUrl: './dropdown-horario.component.html',
   styleUrls: ['./dropdown-horario.component.scss']
 })
-export class DropdownHorarioComponent{
+export class DropdownHorarioComponent {
   
   @Input() label: string = '';
   @Input() horariosDisponiveis: string[] = [];
   @Input() control!: FormControl;
+  @Input() desabilitarInput: Boolean = true;
   
   filteredOptions$: string[] = this.horariosDisponiveis;
-
   
 }
