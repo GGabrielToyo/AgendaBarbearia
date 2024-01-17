@@ -1,3 +1,4 @@
+<!--
 <mat-form-field class="input-container" appearance="outline">
     <mat-label>{{ label }}</mat-label>
     <input
@@ -13,3 +14,11 @@
         </mat-option>
       </mat-autocomplete>
 </mat-form-field>
+-->
+
+<div class="mb-3">
+  <label for="selectHorarios" class="form-label">{{label}}</label>
+  <select id="selectHorarios" class="form-select" [formControl]="control">
+    <option *ngFor="let horario of horariosDisponiveis" [value]="horario">{{ horario }}</option>
+  </select>
+</div>

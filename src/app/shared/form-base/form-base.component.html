@@ -1,3 +1,4 @@
+<!--
 <app-container>
     <mat-card>
         <form [formGroup]="cadastroForm">
@@ -111,3 +112,122 @@
         </form>
     </mat-card>
 </app-container>
+-->
+
+<form [formGroup]="cadastroForm" class="container text-light p-4 pb-5">
+    <legend class="text-center">
+        <h2>{{titulo}}</h2>
+
+        <section>
+            <div class="acoesPerfil d-flex justify-content-between" *ngIf="perfilComponent">
+                <h2>Dados pessoais</h2>
+                <button class="btn btn-outline-light d-flex" (click)="deslogar()">
+                    <mat-icon>logout</mat-icon>
+                    DESLOGAR
+                </button>
+            </div>
+        </section>
+    </legend>
+
+    <div class="dadosPessoais">
+        <div class="mb-3">
+            <label for="nome" class="form-label">Nome</label>
+            <input type="text" id="nome" class="form-control" placeholder="Digite seu e-mail" formControlName="nome">
+            <mat-error *ngIf="cadastroForm.get('nome')?.errors && cadastroForm.get('nome')?.touched">Nome é
+                obrigatório</mat-error>
+        </div>
+        <div class="mb-3 d-flex">
+            <div class="w-50 p-1">
+                <label for="nascimento" class="form-label">Data de Nascimento</label>
+                <input type="date" id="nascimento" class="form-control" placeholder="Data de Nascimento"
+                    formControlName="nascimento">
+                <mat-error
+                    *ngIf="cadastroForm.get('nascimento')?.errors?.['required'] && cadastroForm.get('nascimento')?.touched">
+                    Data de Nascimento é obrigatória
+                </mat-error>
+            </div>
+
+            <div class="w-50 p-1">
+                <label for="telefone" class="form-label">Telefone</label>
+                <input type="number" id="telefone" class="form-control" placeholder="Data de Nascimento"
+                    formControlName="telefone" placeholder="+XX XXXX-XXXX" maxlength="11">
+                <mat-error
+                    *ngIf="cadastroForm.get('telefone')?.errors && cadastroForm.get('telefone')?.touched">Telefone é
+                    obrigatório</mat-error>
+            </div>
+        </div>
+    </div>
+
+    <div class="DadosEmail">
+        <h2>Dados de Acesso</h2>
+        <div class="mb-3">
+            <label for="email" class="form-label">E-mail</label>
+            <input type="text" id="email" class="form-control" placeholder="Digite seu e-mail" formControlName="email">
+            <mat-error
+                *ngIf="cadastroForm.get('email')?.errors?.['required'] && cadastroForm.get('email')?.touched">E-mail
+                é
+                obrigatório</mat-error>
+            <mat-error *ngIf="cadastroForm.get('email')?.errors?.['email'] && cadastroForm.get('email')?.touched">E-mail
+                inválido</mat-error>
+        </div>
+        <div class="mb-3">
+            <label for="confirmarEmail" class="form-label">Confirme seu e-mail</label>
+            <input type="text" id="confirmarEmail" class="form-control" placeholder="Confirme seu e-mail"
+                formControlName="confirmarEmail">
+            <mat-error
+                *ngIf="cadastroForm.get('confirmarEmail')?.errors?.['required'] && cadastroForm.get('confirmarEmail')?.touched">Confirmação
+                de
+                E-mail é obrigatória</mat-error>
+            <mat-error
+                *ngIf="cadastroForm.get('confirmarEmail')?.errors?.['email'] && cadastroForm.get('confirmarEmail')?.touched">E-mail
+                inválido</mat-error>
+            <mat-error
+                *ngIf="cadastroForm.get('confirmarEmail')?.errors?.['equalTo'] && cadastroForm.get('confirmarEmail')?.touched">E-mail`s
+                precisam
+                ser iguais</mat-error>
+        </div>
+    </div>
+
+    <div class="dadosSenha">
+        <div class="mb-3">
+            <label for="senha" class="form-label">Senha</label>
+            <input type="password" id="senha" class="form-control" placeholder="Digite sua senha"
+                formControlName="senha">
+            <mat-error
+                *ngIf="cadastroForm.get('senha')?.errors?.['required'] && cadastroForm.get('senha')?.touched">Senha é
+                obrigatória</mat-error>
+            <mat-error
+                *ngIf="cadastroForm.get('senha')?.errors?.['minlength'] && cadastroForm.get('senha')?.touched">Senha
+                deve ter pelo
+                menos 3 caracteres</mat-error>
+        </div>
+        <div class="mb-3">
+            <label for="confirmarSenha" class="form-label">Confirme sua senha</label>
+            <input type="password" id="confirmarSenha" class="form-control" placeholder="Digite sua senha"
+                formControlName="confirmarSenha">
+            <mat-error
+                *ngIf="cadastroForm.get('confirmarSenha')?.errors?.['required'] && cadastroForm.get('confirmarSenha')?.touched">Confirmação
+                de
+                Senha é obrigatória</mat-error>
+            <mat-error
+                *ngIf="cadastroForm.get('confirmarSenha')?.errors?.['equalTo'] && cadastroForm.get('confirmarSenha')?.touched">Senhas
+                precisam
+                ser iguais</mat-error>
+        </div>
+    </div>
+
+
+    <div class="form-check mb-4" *ngIf="!perfilComponent">
+        <input formControlName="aceitarTermos" class="form-check-input" type="checkbox" id="aceitarTermos">
+        <label class="form-check-label" for="aceitarTermos">
+            Li e aceito os termos e condições deste cadastro *
+        </label>
+        <mat-error *ngIf="cadastroForm.get('aceitarTermos')?.invalid && cadastroForm.get('aceitarTermos')?.dirty">
+            Você precisa aceitar os termos e condições para efetuar o cadastro
+        </mat-error>
+    </div>
+
+    <button [class.perfil-button]="perfilComponent" class="btn btn-outline-light w-100"
+        [disabled]="cadastroForm.invalid" (click)="executarAcao()">
+        {{textoBotao}}</button>
+</form>

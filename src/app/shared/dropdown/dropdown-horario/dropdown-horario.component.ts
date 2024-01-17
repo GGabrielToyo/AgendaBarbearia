@@ -11,8 +11,5 @@ export class DropdownHorarioComponent {
   @Input() label: string = '';
   @Input() horariosDisponiveis: string[] = [];
   @Input() control!: FormControl;
-  @Input() desabilitarInput: Boolean = true;
-  
-  filteredOptions$: string[] = this.horariosDisponiveis;
-  
+ 
 }

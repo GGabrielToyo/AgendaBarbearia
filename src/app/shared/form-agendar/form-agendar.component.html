@@ -1,3 +1,4 @@
+<!--
 <app-container>
     <mat-card>
         <form [formGroup]="formAgendamento">
@@ -24,14 +25,17 @@
                         <mat-error *ngIf="barbeiroControl?.errors && barbeiroControl?.touched">
                             Escolha um barbeiro para prosseguir.
                         </mat-error>
-                        <app-dropdown-horario (click)="atualizarHorariosDeAcordoComHorariosDisponiveisDoBarbeiroEscolhido()" [horariosDisponiveis]="horarios" label="Horário"
+                        <app-dropdown-horario
+                            (click)="atualizarHorariosDeAcordoComHorariosDisponiveisDoBarbeiroEscolhido()"
+                            [horariosDisponiveis]="horarios" label="Horário"
                             [control]="horarioControl"></app-dropdown-horario>
                         <mat-error *ngIf="horarioControl?.errors && horarioControl?.touched">
                             Escolha um horário.
                         </mat-error>
 
                         <mat-card-actions class="full-width">
-                            <button mat-flat-button [disabled]="formAgendamento.invalid" color="primary" (click)="agendar()">
+                            <button mat-flat-button [disabled]="formAgendamento.invalid" color="primary"
+                                (click)="agendar()">
                                 AGENDAR
                             </button>
                         </mat-card-actions>
@@ -41,3 +45,39 @@
         </form>
     </mat-card>
 </app-container>
+-->
+
+<form [formGroup]="formAgendamento" class="container text-light p-4 pb-5">
+    <legend class="text-center">
+        <h2>Agende seu horário</h2>
+    </legend>
+    <div class="mb-3">
+        <label for="nascimento" class="form-label">Data de Nascimento</label>
+        <input type="date" id="nascimento" class="form-control" placeholder="Data de Nascimento"
+            [(ngModel)]="dataSelecionada" [ngModelOptions]="{standalone: true}"
+            (change)="buscarHorariosDisponiveisNaData()">
+        <mat-error *ngIf="formAgendamento.get('data')?.errors?.['required'] && formAgendamento.get('data')?.touched">
+            Escolha uma data.
+        </mat-error>
+    </div>
+
+    <div class="mb-3">
+        <app-dropdown label="Barbeiro" [control]="barbeiroControl" (emitirBarbeiro)="recebendoBarbeiro($event)"></app-dropdown>
+        <mat-error *ngIf="barbeiroControl?.errors && barbeiroControl?.touched">
+            Escolha um barbeiro para prosseguir.
+        </mat-error>
+    </div>
+
+    <div class="mb-3">
+        <app-dropdown-horario (click)="atualizarHorariosDeAcordoComHorariosDisponiveisDoBarbeiroEscolhido()"
+            [horariosDisponiveis]="horarios" label="Horário" [control]="horarioControl"></app-dropdown-horario>
+        <mat-error *ngIf="horarioControl?.errors && horarioControl?.touched">
+            Escolha um horário.
+        </mat-error>
+    </div>
+
+    <button class="btn btn-outline-light w-100" [disabled]="formAgendamento.invalid" (click)="agendar()">
+        AGENDAR
+    </button>
+
+</form>

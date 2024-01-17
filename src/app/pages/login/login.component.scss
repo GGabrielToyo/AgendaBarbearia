@@ -1,4 +1,4 @@
-.login-component {
+/*.login-component {
     max-width: 50%;
     min-height: 74%;
     overflow-y: hidden;
@@ -62,6 +62,14 @@
             &:active {
                 color: #551A8B;
             }
+        }
+    }
+}*/
+
+.container{
+    .mb-3{
+        mat-error {
+            color: #ff0000;
         }
     }
 }

@@ -1,3 +1,4 @@
+<!--
 <mat-form-field class="input-container" appearance="outline">
     <mat-label>{{ label }}</mat-label>
     <input
@@ -13,3 +14,10 @@
         </mat-option>
       </mat-autocomplete>
 </mat-form-field>
+-->
+<div class="mb-3">
+  <label for="selectBarbeiros" class="form-label">Barbeiro</label>
+  <select id="selectBarbeiros" class="form-select" [formControl]="control" [(ngModel)]="barbeiroSelecionado" (change)="emitBarbeiro()">
+    <option *ngFor=" let barbeiro of barbeiros" [ngValue]="barbeiro">{{ barbeiro.nome }}</option>
+  </select>
+</div>

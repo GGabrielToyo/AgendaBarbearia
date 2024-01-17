@@ -37,6 +37,7 @@ import { AgendarComponent } from './pages/agendar/agendar.component';
 import { FormAgendarComponent } from './shared/form-agendar/form-agendar.component';
 import { DropdownComponent } from './shared/dropdown/dropdown.component';
 import { DropdownHorarioComponent } from './shared/dropdown/dropdown-horario/dropdown-horario.component';
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 
 @NgModule({
   declarations: [
@@ -76,7 +77,8 @@ import { DropdownHorarioComponent } from './shared/dropdown/dropdown-horario/dro
     MatNativeDateModule,
     MatDialogModule,
     MatAutocompleteModule,
-    HttpClientModule
+    HttpClientModule,
+    NgbModule
   ],
   providers: [{
     provide: HTTP_INTERCEPTORS,

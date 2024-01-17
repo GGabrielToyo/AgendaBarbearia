@@ -21,11 +21,11 @@ export class AgendaService {
     return this.http.get<Agendamento[]>(`${this.apiUrl}/agendamentos`);
   }
 
-  getHorariosNaData(data: Date): Observable<Agendamento[]> {
-    const dataFormatada = data.toISOString();
-    return this.http.get<Agendamento[]>(`${this.apiUrl}/agendamentos/${dataFormatada}`);
-  }
+  getHorariosNaData(data: string): Observable<Agendamento[]> {
 
+    return this.http.get<Agendamento[]>(`${this.apiUrl}/agendamentos/${data}`);
+  }
+ 
   agendarHorario(agendamento: Agendamento): Observable<Agendamento> {
     return this.http.post<Agendamento>(`${this.apiUrl}/agendamentos`, agendamento);
   }

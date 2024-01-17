@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { FormControl, Validators } from '@angular/forms';
 import { Observable, map, startWith } from 'rxjs';
 import { BarbeiroService } from 'src/app/core/services/barbeiro.service';
@@ -14,8 +14,10 @@ export class DropdownComponent implements OnInit {
   @Input() label: string = '';
   //control = new FormControl<Barbeiro | string>('');
   barbeiros: Barbeiro[] = [];
+  barbeiroSelecionado!: Barbeiro
   filteredOptions$?: Observable<Barbeiro[]>;
-  @Input() control!: FormControl;
+  @Input() control!: FormControl<Barbeiro | null>;
+  @Output() emitirBarbeiro = new EventEmitter<Barbeiro>();
 
   constructor(
     private barbeiroService: BarbeiroService
@@ -26,15 +28,21 @@ export class DropdownComponent implements OnInit {
       this.barbeiros = resp.content;
     });
 
-    this.filteredOptions$ = this.control.valueChanges.pipe(
+    /*this.filteredOptions$ = this.control.valueChanges.pipe(
       startWith(''),
       map(value =>{
         const nome = typeof value === 'string' ? value : value?.nome;
         return nome ? this._filter(nome as string) : this.barbeiros.slice();
       })
-    )
+    )*/
+
   }
 
+  emitBarbeiro(){
+    this.emitirBarbeiro.emit(this.barbeiroSelecionado);
+  }
+
+  /*
   private _filter(value: string): Barbeiro[] {
     const filterValue = value.toLowerCase();
 
@@ -44,6 +52,6 @@ export class DropdownComponent implements OnInit {
   displayFn(barbeiro: Barbeiro): string {
     return barbeiro && barbeiro.nome ? barbeiro.nome : '';
   }
-
+  */
 
 }

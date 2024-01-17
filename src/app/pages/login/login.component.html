@@ -1,4 +1,5 @@
-<section class="login-component">
+<!--
+<section class="login-component text-light">
     <mat-card class="login">
         <div class="image-container">
             <figure>
@@ -37,3 +38,28 @@
         </div>
     </mat-card>
 </section>
+-->
+
+<form [formGroup]="loginForm" class="container text-light p-4 pb-5">
+    <legend class="text-center">
+        <h2>Login</h2>
+    </legend>
+    <div class="mb-3">
+        <label for="login" class="form-label">E-mail</label>
+        <input type="text" id="login" class="form-control" placeholder="Digite seu e-mail" formControlName="email">
+        <mat-error *ngIf="loginForm.get('email')?.errors?.['required'] && loginForm.get('email')?.touched">E-mail é
+            obrigatório.</mat-error>
+    </div>
+    <div class="mb-3">
+        <label for="senha" class="form-label">Senha</label>
+        <input type="password" id="senha" class="form-control" placeholder="Digite sua senha" formControlName="senha">
+        <mat-error *ngIf="loginForm.get('senha')?.errors?.['required'] && loginForm.get('senha')?.touched">Senha é
+            obrigatória.</mat-error>
+    </div>
+
+    <button [disabled]="loginForm.invalid" (click)="login()" class="btn btn-outline-light w-100">
+        ACESSAR MINHA CONTA</button>
+
+    <P class="mt-3">Ainda não possui conta? <a routerLink="/cadastro"><strong><u>Clique aqui para se
+                    cadastrar</u></strong></a></P>
+</form>

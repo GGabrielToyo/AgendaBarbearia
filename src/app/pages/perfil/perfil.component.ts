@@ -12,7 +12,7 @@ import { Router } from '@angular/router';
   templateUrl: './perfil.component.html',
   styleUrls: ['./perfil.component.scss']
 })
-export class PerfilComponent implements OnInit{
+export class PerfilComponent implements OnInit {
   titulo: string = 'Olá, ';
   textoBotao: string = 'ATUALIZAR';
   perfilComponent: boolean = true;
@@ -28,7 +28,7 @@ export class PerfilComponent implements OnInit{
     private formService: FormularioService,
     private userService: UserService,
     private router: Router
-  ){}
+  ) { }
 
   ngOnInit(): void {
     this.token = this.tokenService.retornarToken();
@@ -43,7 +43,7 @@ export class PerfilComponent implements OnInit{
     this.form = this.formService.getCadastro();
     this.form?.patchValue({
       nome: this.usuario.nome,
-      nascimento: this.usuario.nascimento,
+      nascimento: this.formatarDataParaInput(this.usuario.nascimento),//this.formatarDataParaInput(this.usuario.nascimento)
       telefone: this.usuario.telefone,
       email: this.usuario.login,
       confirmarEmail: this.usuario.login,
@@ -56,7 +56,7 @@ export class PerfilComponent implements OnInit{
     const dadosAtualizados: Usuario = {
       id: this.usuario.id,
       nome: this.form?.value.nome,
-      nascimento: this.form?.value.nascimento,
+      nascimento: this.formatarDataParaAtualizar(this.form?.value.nascimento),
       telefone: this.form?.value.telefone,
       login: this.form?.value.email,
       senha: this.form?.value.senha,
@@ -73,6 +73,19 @@ export class PerfilComponent implements OnInit{
         console.log("Erro ao atualizar cadastro: ", err);
       }
     });
+  }
+
+  formatarDataParaInput(dataString: string): string {
+    const data = new Date(dataString);
+    const ano = data.getFullYear();
+    const mes = (data.getMonth() + 1).toString().padStart(2, '0');
+    const dia = data.getDate().toString().padStart(2, '0');
+
+    return `${ano}-${mes}-${dia}`;
+  }
+
+  formatarDataParaAtualizar(data : string): string {
+    return `${data}T03:00:00`;
   }
 
   deslogar(): void {
