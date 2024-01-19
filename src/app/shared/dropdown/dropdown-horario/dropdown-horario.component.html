@@ -19,6 +19,6 @@
 <div class="mb-3">
   <label for="selectHorarios" class="form-label">{{label}}</label>
   <select id="selectHorarios" class="form-select" [formControl]="control">
-    <option *ngFor="let horario of horariosDisponiveis" [value]="horario">{{ horario }}</option>
+    <option *ngFor="let horario of horariosDisponiveis" [value]="horario" ngDefaultControl="horario">{{ horario }}</option>
   </select>
 </div>

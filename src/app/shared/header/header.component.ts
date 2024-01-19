@@ -1,5 +1,6 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { CadastroService } from 'src/app/core/services/cadastro.service';
 import { UserService } from 'src/app/core/services/user.service';
 
 @Component({
@@ -7,16 +8,24 @@ import { UserService } from 'src/app/core/services/user.service';
   templateUrl: './header.component.html',
   styleUrls: ['./header.component.scss']
 })
-export class HeaderComponent {
+export class HeaderComponent implements OnInit {
+
+  user$ = this.userService.retornarUser();
+  nomeUsuario: string = '';
 
   constructor(
     private userService: UserService,
-    private router: Router
-  ){}
+    private router: Router,
+    private cadastroService: CadastroService
+  ) { }
 
-  user$ = this.userService.retornarUser();
+  ngOnInit(): void {
+    this.cadastroService.buscarUsuario().subscribe(user => {
+      this.nomeUsuario = user.nome;
+    })
+  }
 
-  logout(){
+  logout() {
     this.userService.logout();
     this.router.navigateByUrl('/login');
   }

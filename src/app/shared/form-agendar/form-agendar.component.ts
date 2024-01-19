@@ -1,11 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
 import { AgendaService } from 'src/app/core/services/agenda.service';
-import { BarbeiroService } from 'src/app/core/services/barbeiro.service';
 import { CadastroService } from 'src/app/core/services/cadastro.service';
 import { FormularioAgendamentoService } from 'src/app/core/services/formulario-agendamento.service';
-import { UserService } from 'src/app/core/services/user.service';
-import { Agendamento, Barbeiro, Usuario } from 'src/app/core/types/type';
+import { Agendamento, Barbeiro, MensagemErro, Usuario } from 'src/app/core/types/type';
 
 @Component({
   selector: 'app-form-agendar',
@@ -16,7 +15,6 @@ export class FormAgendarComponent implements OnInit {
   formAgendamento!: FormGroup;
   barbeiroControl = new FormControl<Barbeiro | null>(null, Validators.required);
   horarioControl = new FormControl<String[] | null>(null, Validators.required);
-  barbeiros: Barbeiro[] = [];
 
   dataSelecionada!: Date;
   horarios: string[] = [];
@@ -24,13 +22,14 @@ export class FormAgendarComponent implements OnInit {
 
   novoAgendamento: Agendamento | undefined = undefined;
   usuario!: Usuario;
+  mensagemErro: string = '';
 
   constructor(
     private agendaService: AgendaService,
     private formAgendamentoService: FormularioAgendamentoService,
     private formBuilder: FormBuilder,
     private cadastroService: CadastroService,
-    private barbeiroService:BarbeiroService
+    private router: Router
   ) { }
 
   ngOnInit(): void {
@@ -40,10 +39,6 @@ export class FormAgendarComponent implements OnInit {
       horario: this.horarioControl
     });
 
-    this.barbeiroService.getBarbeiros().subscribe(resp => {
-      this.barbeiros = resp.content;
-    });
-  
     this.formAgendamentoService.setAgendamento(this.formAgendamento);
 
     this.cadastroService.buscarUsuario().subscribe(usuario => {
@@ -53,12 +48,14 @@ export class FormAgendarComponent implements OnInit {
 
   buscarHorariosDisponiveisNaData() {
     this.setValueDataForm();
+    const dataBusca = `${this.formAgendamento.get('data')?.value}T03:00:00`;
     this.horariosOcupadosNaData = [];
 
-    this.agendaService.getHorariosNaData(`${this.dataSelecionada}T03:00:00`).subscribe(resp => {
-      this.horariosOcupadosNaData = resp;
-    });
-  
+    if (this.dataSelecionada) {
+      this.agendaService.getHorariosNaData(dataBusca).subscribe(resp => {
+        this.horariosOcupadosNaData = resp;
+      });
+    }
   }
 
   preencherHorarios(): void {
@@ -91,7 +88,7 @@ export class FormAgendarComponent implements OnInit {
   atualizarHorariosDeAcordoComHorariosDisponiveisDoBarbeiroEscolhido(): void {
     this.preencherHorarios();
     var barbeiroEscolhido: Barbeiro = this.formAgendamento.get('barbeiro')?.value;
-    
+    console.log(barbeiroEscolhido);
     if (!(this.horariosOcupadosNaData.length == 0) && barbeiroEscolhido.id) {
       this.horariosOcupadosNaData.forEach(horarioOcupado => {
         if (horarioOcupado.idBarbeiro == barbeiroEscolhido.id) {
@@ -104,19 +101,8 @@ export class FormAgendarComponent implements OnInit {
     }
   }
 
-  recebendoBarbeiro(barbeiro: Barbeiro){
-    this.barbeiroControl.setValue(barbeiro);
-  }
-
-
   setValueDataForm(): void {
     this.formAgendamento.get('data')?.setValue(this.dataSelecionada);
-  }
-
-  formatarDataParaAgendamento(): string {
-    const data = this.dataSelecionada.toISOString().substring(0, 10);
-    const hora = this.formAgendamento.get('horario')?.value;
-    return `${data}T${hora}`;
   }
 
   agendar(): void {
@@ -124,22 +110,31 @@ export class FormAgendarComponent implements OnInit {
     this.novoAgendamento = {
       idBarbeiro: barbeiro.id,
       idUsuario: this.usuario.id,
-      data: this.formatarDataParaAgendamento()
+      data: `${this.formAgendamento.get('data')?.value}T${this.formAgendamento.get('horario')?.value}`
     }
 
-    console.log(this.novoAgendamento);
-
-    //this.agendaService.agendarHorario(this.novoAgendamento).subscribe(resp => {
-    //  this.buscarHorariosDisponiveisNaData();  
-    //});
-
-    this.formAgendamento.reset();
-
-    this.agendaService.getTodosAgendamentos().subscribe(resp => {
-      console.log(resp);
+    this.agendaService.agendarHorario(this.novoAgendamento).subscribe({
+      next: (resp) => {
+        console.log(resp);
+        this.router.navigateByUrl('/');
+      },
+      error: (err) => {
+        const erro: MensagemErro[] = err.error;
+        this.mensagemErro = `Campo ${erro[0].campo} ${erro[0].mensagem}`;
+        this.temporizadorParaTirarMensagemDeErroDaTela();
+      }
     });
 
 
+    this.formAgendamento.reset();
+    this.dataSelecionada = new Date();
+
+  }
+
+  temporizadorParaTirarMensagemDeErroDaTela(): void {
+    setTimeout(() => {
+      this.mensagemErro = '';
+    }, 5000);
   }
 
 }

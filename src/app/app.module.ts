@@ -38,6 +38,8 @@ import { FormAgendarComponent } from './shared/form-agendar/form-agendar.compone
 import { DropdownComponent } from './shared/dropdown/dropdown.component';
 import { DropdownHorarioComponent } from './shared/dropdown/dropdown-horario/dropdown-horario.component';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { ErrorMessageComponent } from './shared/error-message/error-message.component';
+import { MeusAgendamentosComponent } from './pages/meus-agendamentos/meus-agendamentos.component';
 
 @NgModule({
   declarations: [
@@ -54,7 +56,9 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
     AgendarComponent,
     FormAgendarComponent,
     DropdownComponent,
-    DropdownHorarioComponent
+    DropdownHorarioComponent,
+    ErrorMessageComponent,
+    MeusAgendamentosComponent
   ],
   imports: [
     BrowserModule,

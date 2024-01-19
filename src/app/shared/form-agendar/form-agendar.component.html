@@ -62,7 +62,7 @@
     </div>
 
     <div class="mb-3">
-        <app-dropdown label="Barbeiro" [control]="barbeiroControl" (emitirBarbeiro)="recebendoBarbeiro($event)"></app-dropdown>
+        <app-dropdown label="Barbeiro" [control]="barbeiroControl"></app-dropdown>
         <mat-error *ngIf="barbeiroControl?.errors && barbeiroControl?.touched">
             Escolha um barbeiro para prosseguir.
         </mat-error>
@@ -81,3 +81,4 @@
     </button>
 
 </form>
+<app-error-message [errorMessage]="mensagemErro"></app-error-message>

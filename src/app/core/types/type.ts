@@ -36,3 +36,8 @@ export interface AuthResponse {
     idUsuario: number | null,
     data: string
   }
+
+  export interface MensagemErro {
+    campo: string,
+    mensagem: string
+  }

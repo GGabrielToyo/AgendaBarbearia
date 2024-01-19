@@ -12,12 +12,10 @@ import { Barbeiro } from 'src/app/core/types/type';
 export class DropdownComponent implements OnInit {
 
   @Input() label: string = '';
-  //control = new FormControl<Barbeiro | string>('');
   barbeiros: Barbeiro[] = [];
   barbeiroSelecionado!: Barbeiro
   filteredOptions$?: Observable<Barbeiro[]>;
   @Input() control!: FormControl<Barbeiro | null>;
-  @Output() emitirBarbeiro = new EventEmitter<Barbeiro>();
 
   constructor(
     private barbeiroService: BarbeiroService
@@ -36,10 +34,6 @@ export class DropdownComponent implements OnInit {
       })
     )*/
 
-  }
-
-  emitBarbeiro(){
-    this.emitirBarbeiro.emit(this.barbeiroSelecionado);
   }
 
   /*

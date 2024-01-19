@@ -3,8 +3,7 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { environment } from 'src/environments/environment.development';
 import { Agendamento } from '../types/type';
-import { Data } from '@angular/router';
-import { FormControl } from '@angular/forms';
+
 
 @Injectable({
   providedIn: 'root'

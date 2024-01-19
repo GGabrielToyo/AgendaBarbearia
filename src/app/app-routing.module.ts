@@ -6,6 +6,7 @@ import { LoginComponent } from './pages/login/login.component';
 import { PerfilComponent } from './pages/perfil/perfil.component';
 import { authGuard } from './core/guards/auth.guard';
 import { AgendarComponent } from './pages/agendar/agendar.component';
+import { MeusAgendamentosComponent } from './pages/meus-agendamentos/meus-agendamentos.component';
 
 const routes: Routes = [
   {
@@ -28,6 +29,11 @@ const routes: Routes = [
   {
     path: 'agendar',
     component: AgendarComponent,
+    canActivate: [authGuard]
+  },
+  {
+    path: 'agenda',
+    component: MeusAgendamentosComponent,
     canActivate: [authGuard]
   }
 ];

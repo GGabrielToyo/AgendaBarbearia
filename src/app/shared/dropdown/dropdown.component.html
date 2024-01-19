@@ -17,7 +17,7 @@
 -->
 <div class="mb-3">
   <label for="selectBarbeiros" class="form-label">Barbeiro</label>
-  <select id="selectBarbeiros" class="form-select" [formControl]="control" [(ngModel)]="barbeiroSelecionado" (change)="emitBarbeiro()">
-    <option *ngFor=" let barbeiro of barbeiros" [ngValue]="barbeiro">{{ barbeiro.nome }}</option>
+  <select id="selectBarbeiros" class="form-select" [formControl]="control">
+    <option *ngFor=" let barbeiro of barbeiros" [ngValue]="barbeiro" ngDefaultControl="barbeiro">{{ barbeiro.nome }}</option>
   </select>
 </div>

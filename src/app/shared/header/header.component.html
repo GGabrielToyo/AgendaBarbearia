@@ -45,15 +45,32 @@
                 <li class="nav-item">
                     <a class="nav-link active" aria-current="page" routerLink="/agendar">Agendar horário</a>
                 </li>
-                <li class="nav-item">
-                    <button type="button" class="btn btn-light" routerLink="/cadastro">CADASTRE-SE</button>
-                </li>
-                <li class="nav-item">
-                    <button type="button" class="btn btn-outline-secondary" routerLink="/login">LOGIN</button>
-                </li>
+                
+                <ng-container *ngIf="user$ | async as pessoaUsuaria, else login">
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                            {{nomeUsuario}}
+                        </a>
+                        <ul class="dropdown-menu">
+                          <li><a class="dropdown-item" routerLink="/perfil">Perfil</a></li>
+                          <li><hr class="dropdown-divider"></li>
+                          <li><a class="dropdown-item" routerLink="/agenda">Meus Agendamentos</a></li>
+                        </ul>
+                      </li>
+                    <li class="nav-item">
+                        <button type="button" class="btn btn-outline-secondary" (click)="logout()">SAIR</button>
+                    </li>
+                </ng-container>
+
+                <ng-template #login>
+                    <li class="nav-item">
+                        <button type="button" class="btn btn-light" routerLink="/cadastro">CADASTRE-SE</button>
+                    </li>
+                    <li class="nav-item">
+                        <button type="button" class="btn btn-outline-secondary" routerLink="/login">LOGIN</button>
+                    </li>
+                </ng-template>
             </ul>
         </div>
-
-
     </div>
 </nav>
